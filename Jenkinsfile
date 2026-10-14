@@ -8,8 +8,10 @@ pipeline {
     stages {
         stage('Deploy API') {
             steps {
-                sh 'docker compose pull'
-                sh 'docker compose up -d'
+                sh 'docker compose down --remove-orphans || true'
+                sh 'docker rm -f linear-regression-api || true'
+		sh 'docker compose pull'
+		sh 'docker compose up -d'
             }
         }
 
